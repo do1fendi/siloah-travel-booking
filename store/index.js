@@ -1,6 +1,6 @@
 export const state = () => ({
     userName: "siloahapiweb",
-    password: "c2lsb2FoYXBpd2ViOjRxZTNhSTEhWFNaQSlRXm1SKndJQ2hFRQ==",
+    password: "4qe3aI1!XSZA)Q^mR*wIChEE",
     token: ""
 })
 
