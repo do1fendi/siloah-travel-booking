@@ -1,18 +1,18 @@
 <template>
   <div class="container">
-    <Top :tourPackage= "this.tourPackageData" />
-    <RegPerson />
+    <Information :tourPackage= "this.tourPackageData" />
+    <Register />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import Top from '../components/Top.vue'
+import Information from '../components/Information.vue'
 import Register from '../components/Register.vue'
 
 export default {
   components: {
-    Top,
+    Information,
     Register
   },
   head() {
