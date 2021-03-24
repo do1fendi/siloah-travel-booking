@@ -2,6 +2,7 @@
   <div class="container">
     <Information :tourPackage= "this.tourPackageData" />
     <Register />
+    
   </div>
 </template>
 

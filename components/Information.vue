@@ -29,19 +29,17 @@ export default {
   data() {
     return {
       //variant: '',
-      available_seat: 0,
+      available_seat: '0',
     }
   },
   computed: {
-    variant() {
-      let seat = 0
-      seat = this.tourPackage.seat_available
-      this.available_seat = seat
+    variant() {      
+      this.available_seat = this.tourPackage.seat_available ? this.tourPackage.seat_available: '0'
       switch (true) {
-        case seat > 10:
+        case this.available_seat > 10:
           return 'primary'
           break
-        case seat < 10 && seat > 0:
+        case this.available_seat < 10 && this.available_seat > 0:
           return 'warning'
           break
         default:
