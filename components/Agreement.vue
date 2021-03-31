@@ -1,6 +1,6 @@
 <template>
   <div class="agreement">
-    <b-modal id="agreement" size="xl" title="Agreement" hide-header ok-only>
+    <b-modal id="agreement" size="xl" title="Agreement" hide-header ok-only no-close-on-backdrop>
       <div>
         <b-card-group class="mb-2">
           <b-card

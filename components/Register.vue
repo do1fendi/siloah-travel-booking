@@ -70,23 +70,29 @@
           required
         ></b-form-input>
       </b-col>
+    
       <div class="mt-2 text-right">
         <h6>
           <b-badge
             class="showAgreement"
-            variant="warning"
+            variant="danger"
             @click="showAgreementModal"
             >Show Agreement</b-badge
           >
         </h6>
       </div>
+      <b-alert show variant="success">
+        Travelers
+      </b-alert>
+      <Traveler />
       <div class="text-right mt-2">
-        <b-button type="submit" variant="primary">Submit</b-button>        
+        <b-button type="submit" variant="warning"><h6>Submit</h6></b-button>        
       </div>
     </b-form>
     <div>
       {{ form }}
     </div>
+    
     <Agreement ref="childAgreement" />
   </div>
 </template>
@@ -94,15 +100,15 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex'
 import Agreement from '../components/Agreement.vue'
+import Traveler from '../components/Traveler.vue'
 
 export default {
   components: {
     Agreement,
+    Traveler
   },
-  computed: {
-    ...mapMutations(['SET_REGFORM']),
-    ...mapMutations('form',['SET_FORM']),
-    ...mapGetters('registrant', ['GET_REGFORM']),
+  computed: { 
+    ...mapMutations('form',['SET_REGFORM']),
     ...mapGetters('country', ['GET_COUNTRY']),
     ...mapGetters('country', ['GET_PHONECODE']),
     ...mapGetters('form',['GET_FORM']),
@@ -123,6 +129,16 @@ export default {
     valRegAddressState() {
       return this.form.regAddress.length >= 5
     },
+    // bind form fields to form store
+    // regFirstname: {
+    //   get() {
+    //     return this.$store.state.form.regFirstname;
+    //   },
+    //   set(value) {
+    //     this.$store.commit('form/SET_REGFORM', regFirstname, value);
+    //   },
+    // },
+
   },
   data() {
     return {
@@ -131,14 +147,7 @@ export default {
       phoneCode: [],
       tpPhoneCode: '+886',
       tpPhoneNumber: '',
-      form: {
-        regFirstname: '',
-        regLastname: '',
-        regEmail: '',
-        regContactNumber: '',
-        regCountry: 'Taiwan',
-        regAddress: '',
-      },
+      form: this.GET_FORM,
     }
   },
   methods: {
@@ -156,12 +165,13 @@ export default {
     },
     onstart() {
       this.onStart = 'setField'
-    },
+    },    
   },
   mounted() {
-    this.form.regContactNumber = this.tpPhoneCode
+    //this.form.regContactNumber = this.tpPhoneCode    
   },
   created() {
+    this.form = this.GET_FORM
     this.country = this.GET_COUNTRY
     this.phoneCode = this.GET_PHONECODE
     //console.log(this.GET_PHONECODE)

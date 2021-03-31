@@ -16,5 +16,8 @@ export default {
     padding: 20px;
     text-align: center;
     color: azure;
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
 }
 </style>
