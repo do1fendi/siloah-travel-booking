@@ -81,9 +81,9 @@
           >
         </h6>
       </div>
-      <b-alert show variant="success">
+      <!-- <b-alert show variant="success">
         Travelers
-      </b-alert>
+      </b-alert> -->
       <Traveler />
       <div class="text-right mt-2">
         <b-button type="submit" variant="warning"><h6>Submit</h6></b-button>        

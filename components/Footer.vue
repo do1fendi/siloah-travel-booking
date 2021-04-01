@@ -19,5 +19,6 @@ export default {
     position: fixed;
     width: 100%;
     bottom: 0px;
+    margin-top: 50px;
 }
 </style>

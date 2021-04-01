@@ -5,6 +5,7 @@
       hide-header
       no-close-on-backdrop
       @ok="handleForm"
+      size= "lg"
     >
       <b-form>
         <b-col>
@@ -13,9 +14,7 @@
             placeholder="Enter name"
           ></b-form-input>
         </b-col>
-      </b-form>
-      {{ index }}
-      {{ form }}
+      </b-form>      
     </b-modal>
   </div>
 </template>

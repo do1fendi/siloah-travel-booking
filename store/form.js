@@ -1,18 +1,3 @@
-// export const state = () =>({
-//     form:[]
-// })
-
-// export const mutations = {
-//     SET_FORM(state,payload){
-//         state.form=[]
-//         state.form.push(payload)
-//     }
-// }
-
-// export const getters = {
-//     GET_FORM: (state) => state.form
-// }
-
 export const state = () => ({
   form: {
     regFirstname: '',
@@ -45,28 +30,21 @@ export const mutations = {
         break
     }
   },
-  async SET_TRAVELER(state,  {index, form}) {
+  SET_TRAVELER(state,  {index, form}) {
     switch (index) {
       case null:
         state.form.traveler.push(form)
         break
       default:
-        state.form.traveler.push(form)
+        state.form.traveler[index] = form
+        //push empty to make table reactive  
+        state.form.traveler.push()    
         break
     }
-
-    // const len = state.form.traveler.length
-    // payload['id'] = len+1
-    // if(typeof (index) == 'undefined'){
-    //     state.form.traveler.push(payload)
-
-    // }
-    // else{
-    //     state.form.traveler[index] =payload
-    // }
-    console.log(index)
-    console.log(form)
   },
+  DELETE_TRAVELER(state, index){
+    state.form.traveler.splice(index,1)
+  }
 }
 
 export const getters = {
