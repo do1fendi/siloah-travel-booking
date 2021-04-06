@@ -86,7 +86,7 @@
       </div>
     </b-form>
     <div>
-     {{form}}
+     {{this.GET_FORM}}
     </div>
 
     <Agreement ref="childAgreement" />
@@ -202,10 +202,7 @@ export default {
     return {
       setFieldBorder: 'setFieldBorder',
       country: [],
-      phoneCode: [],
-      // tpPhoneCode: '+886',
-      // tpPhoneNumber: '',
-      form: this.GET_FORM,
+      phoneCode: [],      
     }
   },
   methods: {

@@ -39,6 +39,7 @@
           </b-col>
         </b-form-row>
       </b-form>
+      {{index}}
     </b-modal>
   </div>
 </template>

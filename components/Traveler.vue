@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <h3>Travelers <b-badge v>{{ travelerNumber }} / {{ maxTravelerNumber }}</b-badge></h3>
+  <div class="mt-5">
+    <h3>Travelers <b-badge>{{ travelerNumber }} / {{ maxTravelerNumber }}</b-badge> <b-button size="sm" variant="primary" @click="showTravelerFormModal" :disabled="disabled"
+      >Add Traveler</b-button
+    ></h3>
     <!-- <p>{{ traveler }}</p>
     <p>{{ traveler.length }}</p> -->
     <div>
@@ -14,11 +16,8 @@
           >
         </template>
       </b-table>
-    </div>
-    <!-- <div @for></div> -->
-    <b-button variant="primary" @click="showTravelerFormModal" :disabled="disabled"
-      >Add Traveler</b-button
-    >
+    </div>    
+    
     <Travelerform ref="childTravelform" />
   </div>
 </template>
@@ -35,7 +34,7 @@ export default {
   data() {
     return {
       traveler: this.GET_TRAVELER,
-      travelerNumber: 0,
+      travelerNumber: this.GET_TRAVELERNUMBER,
       maxTravelerNumber: 7,
       fields: [{key:'lastTName', label: 'First Name'}, {key:'firstTName',label:'Last Name'}, 'birthday', { key: 'actions' }],
     }
