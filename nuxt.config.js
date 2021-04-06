@@ -2,7 +2,7 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
   router: {
-    base: '/siloah_travel_booking/'
+    base: '/siloah-travel-booking/'
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head

@@ -9,7 +9,7 @@
     "generate": "nuxt generate",
     "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://do1fendi.github.io/siloah_travel_booking/",
+  "homepage": "https://do1fendi.github.io/siloah-travel-booking/",
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
     "bootstrap": "^4.6.0",
