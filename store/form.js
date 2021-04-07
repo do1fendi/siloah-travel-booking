@@ -59,5 +59,4 @@ export const getters = {
   GET_FORM: (state) => state.form,
   GET_TRAVELER: (state) => state.form.traveler,
   GET_TRAVELERNUMBER: (state) => state.form.traveler.length,
-  GET_NAME: (state) => state.name,
 }

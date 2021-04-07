@@ -105,10 +105,8 @@ export default {
   },
   computed: {
     ...mapMutations('form', ['SET_REGFORM']),
-    ...mapGetters('country', ['GET_COUNTRY']),
-    ...mapGetters('country', ['GET_PHONECODE']),
+    ...mapGetters('country', ['GET_COUNTRY','GET_PHONECODE']),
     ...mapGetters('form', ['GET_FORM']),
-    ...mapGetters('form',['GET_NAME']),
 
     valRegLNState() {
       return this.GET_FORM.regLastname.length >= 1

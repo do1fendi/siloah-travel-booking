@@ -10,7 +10,11 @@
       <template v-slot:modal-header>
         <div class="modalHeader w-100 text-center">
           <span class="text-capitalize modalTitle">traveler</span>
-          <b-button size="sm" variant="outline-secondary" v-if="showButton" @click="copyData"
+          <b-button
+            size="sm"
+            variant="outline-secondary"
+            v-if="!travelerCount"
+            @click="copyData"
             >與訂購人相同</b-button
           >
         </div>
@@ -35,11 +39,14 @@
               v-model="form.birthday"
               placeholder="Birthday"
               locale="en"
+              :max="disableFutureDate"
             ></b-form-datepicker>
           </b-col>
         </b-form-row>
-      </b-form>
-      {{index}}
+      </b-form>     
+      <!-- {{ index }}
+      {{ travelerNumber }}
+      {{ form }} -->
     </b-modal>
   </div>
 </template>
@@ -48,6 +55,8 @@
 import { mapGetters, mapMutations } from 'vuex'
 export default {
   data() {
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
     return {
       formTraveler: [],
       form: {
@@ -56,24 +65,25 @@ export default {
         birthday: '',
       },
       index: null,
-      showButton: false,
+      disableFutureDate: today,
     }
   },
   computed: {
-    ...mapGetters('form', ['GET_TRAVELER']),
-    ...mapGetters('form', ['GET_TRAVELERNUMBER']),
-    ...mapMutations('form', ['SET_TRAVELER']),  
+    ...mapGetters('form', ['GET_TRAVELER', 'GET_TRAVELERNUMBER', 'GET_FORM']),
+    ...mapMutations('form', ['SET_TRAVELER']),
+    travelerCount() {
+      return this.GET_TRAVELERNUMBER
+    },
   },
   created() {
     this.formTraveler = this.GET_TRAVELER
-    this.travelerNum = this.GET_TRAVELERNUMBER
+    this.travelerNumber = this.GET_TRAVELERNUMBER
   },
   methods: {
     showTravelerForm(index) {
       if (typeof index == 'undefined') {
         this.form = {}
         this.index = null
-        this.showButton = true
       } else {
         this.form = {}
         //load found traveler data to current form fields
@@ -81,10 +91,10 @@ export default {
         this.form.firstTName = this.GET_TRAVELER[index].firstTName
         this.form.birthday = this.GET_TRAVELER[index].birthday
         this.index = index
-        this.showButton = false
       }
       this.$bvModal.show('travelerForm')
     },
+
     handleForm(e) {
       if (
         typeof this.form.lastTName == 'undefined' ||
@@ -99,11 +109,11 @@ export default {
         this.$store.commit('form/SET_TRAVELER', combine)
       }
     },
-    copyData(){      
-      // this.form.lastTName = this.GET_TRAVELER.regLastname
-      // this.form.firstTName = this.GET_TRAVELER.regFirstname
-      alert(this.GET_TRAVELER.regLastname)
-    }
+    copyData() {
+      this.form = {}
+      this.form.lastTName = this.GET_FORM.regLastname
+      this.form.firstTName = this.GET_FORM.regFirstname
+    },
   },
 }
 </script>

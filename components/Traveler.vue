@@ -1,10 +1,8 @@
 <template>
   <div class="mt-5">
-    <h3>Travelers <b-badge>{{ travelerNumber }} / {{ maxTravelerNumber }}</b-badge> <b-button size="sm" variant="primary" @click="showTravelerFormModal" :disabled="disabled"
+    <h3>Travelers <b-badge>{{ travelerCount }} / {{ maxTravelerNumber }}</b-badge> <b-button size="sm" variant="primary" @click="showTravelerFormModal" :disabled="disabled"
       >Add Traveler</b-button
     ></h3>
-    <!-- <p>{{ traveler }}</p>
-    <p>{{ traveler.length }}</p> -->
     <div>
       <b-table striped hover :items="traveler" :fields="fields">
         <template #cell(actions)="data">
@@ -33,8 +31,8 @@ export default {
   },
   data() {
     return {
-      traveler: this.GET_TRAVELER,
-      travelerNumber: this.GET_TRAVELERNUMBER,
+      traveler: [],
+      travelerNumber: 0,
       maxTravelerNumber: 7,
       fields: [{key:'lastTName', label: 'First Name'}, {key:'firstTName',label:'Last Name'}, 'birthday', { key: 'actions' }],
     }
@@ -42,18 +40,11 @@ export default {
   computed: {
     ...mapGetters('form', ['GET_TRAVELER']),
     ...mapGetters('form',['GET_TRAVELERNUMBER']),
-    ...mapMutations('form', ['DELETE_TRAVELER']),
-    travelerCount(){
-      return this.GET_TRAVELERNUMBER
-    },
-    disabled(){return this.GET_TRAVELERNUMBER >= this.maxTravelerNumber ? true : false}
-    
+    ...mapMutations('form', ['DELETE_TRAVELER']),    
+    travelerCount: function () {return this.GET_TRAVELERNUMBER},
+    disabled(){return this.travelerCount >= this.maxTravelerNumber ? true : false}
   },
-  watch:{
-    travelerCount(newCount, oldCount){
-      this.travelerNumber = newCount
-    }
-  },
+ 
   methods: {
     showTravelerFormModal() {
       this.$refs.childTravelform.showTravelerForm()
@@ -67,7 +58,6 @@ export default {
   },
   created() {
     this.traveler = this.GET_TRAVELER
-    this.travelerNumber = this.GET_TRAVELERNUMBER
   },
 }
 </script>
