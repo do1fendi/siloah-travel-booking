@@ -3,6 +3,7 @@
     <div class="mb-3 text-center">
       <h4>訂購人</h4>
     </div>
+    <!-- <b-form @submit="onSubmit"> -->
     <b-form @submit="onSubmit">
       <b-form-row class="mb-2">
         <b-col class="mr-2">
@@ -12,6 +13,7 @@
             :state="valRegLNState"
             placeholder="Enter your Last name / 姓氏"
             required
+            ref="ln"
           ></b-form-input>
         </b-col>
         <b-col class="ml-2">
@@ -21,6 +23,7 @@
             :state="valRegFNState"
             placeholder="Enter your first name / 名字"
             required
+            ref="fn"
           ></b-form-input>
         </b-col>
       </b-form-row>
@@ -32,14 +35,12 @@
           type="email"
           placeholder="Email"
           required
+          ref="email"
         ></b-form-input>
       </b-col>
       <b-form-row class="mb-2">
         <b-col class="mr-2">
-          <b-form-select
-            v-model="regPhoneCode"
-            :options="phoneCode"
-          >
+          <b-form-select v-model="regPhoneCode" :options="phoneCode">
           </b-form-select>
         </b-col>
         <b-col class="ml-2">
@@ -49,15 +50,14 @@
             type="number"
             :state="valRegPhoneNumberState"
             placeholder="Phone Number 聯絡電話"
+            required
+            ref="phone"
           >
           </b-form-input>
         </b-col>
       </b-form-row>
       <b-col class="mt-2">
-        <b-form-select
-          v-model="regCountry"
-          :options="country"
-        ></b-form-select>
+        <b-form-select v-model="regCountry" :options="country"></b-form-select>
       </b-col>
       <b-col class="mt-2">
         <b-form-input
@@ -66,6 +66,7 @@
           placeholder="Enter Address 地址"
           :state="valRegAddressState"
           required
+          ref="address"
         ></b-form-input>
       </b-col>
 
@@ -79,14 +80,16 @@
           >
         </h6>
       </div>
-    
+
       <Traveler />
-      <div class="text-right mt-2">
-        <b-button type="submit" variant="warning"><h6>Submit</h6></b-button>
-      </div>
     </b-form>
     <div>
-     {{this.GET_FORM}}
+      {{ this.GET_FORM }}
+    </div>
+    <div class="submit">
+      <div class="text-right mt-2">
+        <b-button @click="onSubmit" variant="warning"><h6>Submit</h6></b-button>
+      </div>
     </div>
 
     <Agreement ref="childAgreement" />
@@ -105,9 +108,11 @@ export default {
   },
   computed: {
     ...mapMutations('form', ['SET_REGFORM']),
-    ...mapGetters('country', ['GET_COUNTRY','GET_PHONECODE']),
-    ...mapGetters('form', ['GET_FORM']),
-
+    ...mapGetters('country', ['GET_COUNTRY', 'GET_PHONECODE']),
+    ...mapGetters('form', ['GET_FORM', 'GET_TRAVELERNUMBER']),
+    travelerCount: function () {
+      return this.GET_TRAVELERNUMBER
+    },
     valRegLNState() {
       return this.GET_FORM.regLastname.length >= 1
     },
@@ -122,7 +127,7 @@ export default {
       return this.GET_FORM.regPhoneNumber.length >= 5
     },
     valRegAddressState() {
-      return this.GET_FORM.regAddress.length >= 5
+      return this.GET_FORM.regAddress.length >= 10
     },
     // bind form fields to form store
     regLastname: {
@@ -131,7 +136,7 @@ export default {
       },
       set(value) {
         const field = 'regLastname'
-        const combine = {field, value}
+        const combine = { field, value }
         this.$store.commit('form/SET_REGFORM', combine)
       },
     },
@@ -141,7 +146,7 @@ export default {
       },
       set(value) {
         const field = 'regFirstname'
-        const combine = {field, value}
+        const combine = { field, value }
         this.$store.commit('form/SET_REGFORM', combine)
       },
     },
@@ -151,7 +156,7 @@ export default {
       },
       set(value) {
         const field = 'regEmail'
-        const combine = {field, value}
+        const combine = { field, value }
         this.$store.commit('form/SET_REGFORM', combine)
       },
     },
@@ -161,7 +166,7 @@ export default {
       },
       set(value) {
         const field = 'regPhoneCode'
-        const combine = {field, value}
+        const combine = { field, value }
         this.$store.commit('form/SET_REGFORM', combine)
       },
     },
@@ -171,7 +176,7 @@ export default {
       },
       set(value) {
         const field = 'regPhoneNumber'
-        const combine = {field, value}
+        const combine = { field, value }
         this.$store.commit('form/SET_REGFORM', combine)
       },
     },
@@ -181,7 +186,7 @@ export default {
       },
       set(value) {
         const field = 'regCountry'
-        const combine = {field, value}
+        const combine = { field, value }
         this.$store.commit('form/SET_REGFORM', combine)
       },
     },
@@ -191,7 +196,7 @@ export default {
       },
       set(value) {
         const field = 'regAddress'
-        const combine = {field, value}
+        const combine = { field, value }
         this.$store.commit('form/SET_REGFORM', combine)
       },
     },
@@ -200,14 +205,18 @@ export default {
     return {
       setFieldBorder: 'setFieldBorder',
       country: [],
-      phoneCode: [],      
+      phoneCode: [],
     }
   },
   methods: {
     onSubmit(e) {
       e.preventDefault()
+      if (this.formValidation()) {
+        alert('can be submited')
+      }
+
       //this.$store.commit('form/SET_FORM', this.form)
-      alert(JSON.stringify(this.GET_FORM))
+      //alert(JSON.stringify(this.GET_FORM))
     },
     // function to show agreement modal
     showAgreementModal() {
@@ -216,14 +225,35 @@ export default {
     onstart() {
       this.onStart = 'setField'
     },
+    formValidation() {
+      if (!this.valRegLNState) {
+        this.$refs.ln.$el.focus()
+        return false
+      } else if (!this.valRegFNState) {
+        this.$refs.fn.$el.focus()
+        return false
+      } else if (!this.valRegEmailState) {
+        this.$refs.email.$el.focus()
+        return false
+      } else if (!this.valRegPhoneNumberState) {
+        this.$refs.phone.$el.focus()
+        return false
+      } else if (!this.valRegAddressState) {
+        this.$refs.address.$el.focus()
+        return false
+      } else if (this.travelerCount == 0) {
+        alert('Traveler has not been set!')
+        return false
+      } else return true
+    },
   },
   mounted() {
     //this.form.regContactNumber = this.tpPhoneCode
   },
   created() {
-     this.form = this.GET_FORM
-     this.country = this.GET_COUNTRY
-     this.phoneCode = this.GET_PHONECODE
+    this.form = this.GET_FORM
+    this.country = this.GET_COUNTRY
+    this.phoneCode = this.GET_PHONECODE
     //console.log(this.GET_PHONECODE)
   },
 }

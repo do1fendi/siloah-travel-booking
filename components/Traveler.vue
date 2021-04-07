@@ -4,13 +4,13 @@
       >Add Traveler</b-button
     ></h3>
     <div>
-      <b-table striped hover :items="traveler" :fields="fields">
+      <b-table hover head-variant="light" small :items="traveler" :fields="fields">
         <template #cell(actions)="data">
           <b-button size="sm" variant="info" @click="editTraveler(data)"
-            >Edit</b-button
+            >修改</b-button
           >
           <b-button size="sm" variant="danger" @click="delTraveler(data)"
-            >Delete</b-button
+            >刪除</b-button
           >
         </template>
       </b-table>
