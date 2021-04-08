@@ -4,30 +4,29 @@
       <h4>訂購人</h4>
     </div>
     <!-- <b-form @submit="onSubmit"> -->
-    <b-form @submit="onSubmit">
-      <b-form-row class="mb-2">
-        <b-col class="mr-2">
-          <b-form-input
-            :class="setFieldBorder"
-            v-model="regLastname"
-            :state="valRegLNState"
-            placeholder="Enter your Last name / 姓氏"
-            required
-            ref="ln"
-          ></b-form-input>
-        </b-col>
-        <b-col class="ml-2">
-          <b-form-input
-            :class="setFieldBorder"
-            v-model="regFirstname"
-            :state="valRegFNState"
-            placeholder="Enter your first name / 名字"
-            required
-            ref="fn"
-          ></b-form-input>
-        </b-col>
-      </b-form-row>
-      <b-col class="mb-2">
+    <b-form @submit="onSubmit" class="form">
+      <b-col class="">
+        <b-form-input
+          :class="setFieldBorder"
+          v-model="regLastname"
+          :state="valRegLNState"
+          placeholder="Enter your Last name / 姓氏"
+          required
+          ref="ln"
+        ></b-form-input>
+      </b-col>
+      <b-col class="mt-2">
+        <b-form-input
+          :class="setFieldBorder"
+          v-model="regFirstname"
+          :state="valRegFNState"
+          placeholder="Enter your first name / 名字"
+          required
+          ref="fn"
+        ></b-form-input>
+      </b-col>
+
+      <b-col class="mt-2">
         <b-form-input
           :class="setFieldBorder"
           v-model="regEmail"
@@ -38,24 +37,24 @@
           ref="email"
         ></b-form-input>
       </b-col>
-      <b-form-row class="mb-2">
-        <b-col class="mr-2">
-          <b-form-select v-model="regPhoneCode" :options="phoneCode">
-          </b-form-select>
-        </b-col>
-        <b-col class="ml-2">
-          <b-form-input
-            :class="setFieldBorder"
-            v-model="regPhoneNumber"
-            type="number"
-            :state="valRegPhoneNumberState"
-            placeholder="Phone Number 聯絡電話"
-            required
-            ref="phone"
-          >
-          </b-form-input>
-        </b-col>
-      </b-form-row>
+
+      <b-col class="mt-2">
+        <b-form-select v-model="regPhoneCode" :options="phoneCode">
+        </b-form-select>
+      </b-col>
+      <b-col class="mt-2">
+        <b-form-input
+          :class="setFieldBorder"
+          v-model="regPhoneNumber"
+          type="number"
+          :state="valRegPhoneNumberState"
+          placeholder="Phone Number 聯絡電話"
+          required
+          ref="phone"
+        >
+        </b-form-input>
+      </b-col>
+
       <b-col class="mt-2">
         <b-form-select v-model="regCountry" :options="country"></b-form-select>
       </b-col>
@@ -81,8 +80,9 @@
         </h6>
       </div>
 
-      <Traveler />
+      
     </b-form>
+    <Traveler />
     <div>
       {{ this.GET_FORM }}
     </div>
@@ -113,7 +113,7 @@ export default {
     travelerCount: function () {
       return this.GET_TRAVELERNUMBER
     },
-    valRegLNState() {      
+    valRegLNState() {
       return this.GET_FORM.regLastname.length >= 1
     },
     valRegFNState() {
@@ -269,9 +269,14 @@ export default {
   color: #fff;
 }
 /* Override Bootstrap */
-.form-row {
-  margin-left: 0;
-  margin-right: 0;
+.form {
+  margin: auto;
+  width: 50%;
+}
+@media (max-width: 600px) {
+  .form {
+    width: 100%;
+  }
 }
 .col {
   padding-right: 0;

@@ -224,9 +224,6 @@ export default {
       }else if(!this.valMobileState){
         this.$refs.mb.$el.focus()
         return false
-      }else if(!this.valEmailState){
-        this.$refs.em.$el.focus()
-        return false
       }
       else {
         return true
