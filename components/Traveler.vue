@@ -1,10 +1,36 @@
 <template>
   <div class="mt-5">
-    <h3>Travelers <b-badge>{{ travelerCount }} / {{ maxTravelerNumber }}</b-badge> <b-button size="sm" variant="primary" @click="showTravelerFormModal" :disabled="disabled"
-      >Add Traveler</b-button
-    ></h3>
+ 
+    <b-row>
+      <div class="col">
+        <h3>
+        Travelers
+        <b-badge class="badge"
+          >{{ travelerCount }} / {{ maxTravelerNumber }}</b-badge
+        >
+        </h3>
+      </div>
+      <div class="col text-right">
+        <b-button
+          size="sm"
+          variant="primary"
+          @click="showTravelerFormModal"
+          :disabled="disabled"
+          >Add Traveler</b-button
+        >
+      </div>
+    </b-row>
     <div>
-      <b-table hover head-variant="light" small :items="traveler" :fields="fields">
+      <b-table
+        hover
+        head-variant="light"
+        small
+        :items="traveler"
+        :fields="fields"
+      >
+        <template #cell(FullName)="data">
+          {{traveler[data.index].lastTName}} {{traveler[data.index].firstTName}}
+        </template>
         <template #cell(actions)="data">
           <b-button size="sm" variant="info" @click="editTraveler(data)"
             >修改</b-button
@@ -14,8 +40,8 @@
           >
         </template>
       </b-table>
-    </div>    
-    
+    </div>
+
     <Travelerform ref="childTravelform" />
   </div>
 </template>
@@ -34,17 +60,27 @@ export default {
       traveler: [],
       travelerNumber: 0,
       maxTravelerNumber: 7,
-      fields: [{key:'lastTName', label: 'First Name'}, {key:'firstTName',label:'Last Name'}, 'birthday', { key: 'actions' }],
+      fields: [
+        {key: 'FullName'},
+        // { key: `lastTName`, label: 'First Name' },
+        // { key: 'firstTName', label: 'Last Name' },
+        'birthday',
+        { key: 'actions' },
+      ],
     }
   },
   computed: {
     ...mapGetters('form', ['GET_TRAVELER']),
-    ...mapGetters('form',['GET_TRAVELERNUMBER']),
-    ...mapMutations('form', ['DELETE_TRAVELER']),    
-    travelerCount: function () {return this.GET_TRAVELERNUMBER},
-    disabled(){return this.travelerCount >= this.maxTravelerNumber ? true : false}
+    ...mapGetters('form', ['GET_TRAVELERNUMBER']),
+    ...mapMutations('form', ['DELETE_TRAVELER']),
+    travelerCount: function () {
+      return this.GET_TRAVELERNUMBER
+    },
+    disabled() {
+      return this.travelerCount >= this.maxTravelerNumber ? true : false
+    },
   },
- 
+
   methods: {
     showTravelerFormModal() {
       this.$refs.childTravelform.showTravelerForm()
@@ -62,5 +98,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.badge {
+  font-size: 14px;
+}
 </style>

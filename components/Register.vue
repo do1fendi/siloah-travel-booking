@@ -75,6 +75,7 @@
             class="showAgreement"
             variant="danger"
             @click="showAgreementModal"
+            small
             >Show Agreement</b-badge
           >
         </h6>
