@@ -87,7 +87,7 @@
       {{ this.GET_FORM }}
     </div>
     <div class="submit">
-      <div class="text-right mt-2">
+      <div class="text-center mt-2">
         <b-button @click="onSubmit" variant="warning"><h6>Submit</h6></b-button>
       </div>
     </div>
@@ -113,7 +113,7 @@ export default {
     travelerCount: function () {
       return this.GET_TRAVELERNUMBER
     },
-    valRegLNState() {
+    valRegLNState() {      
       return this.GET_FORM.regLastname.length >= 1
     },
     valRegFNState() {

@@ -104,5 +104,6 @@ export default {
   padding: 0px;
   color: #434852;
   font-weight: 500;
+  margin-bottom: 70px ;
 }
 </style>
