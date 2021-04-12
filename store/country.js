@@ -1,6 +1,6 @@
 export const state = () => ({
   country: [
-    { value: ' Fogo Island', text: ' Fogo Island (null)' },
+    { value: 'Fogo Island', text: 'Fogo Island (null)' },
     { value: 'Afghanistan', text: 'Afghanistan (阿富汗)' },
     { value: 'Aland Islands', text: 'Aland Islands (奧蘭群島)' },
     { value: 'Albania', text: 'Albania (阿爾巴尼亞)' },

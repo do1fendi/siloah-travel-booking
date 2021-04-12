@@ -7,8 +7,10 @@ export const state = () => ({
     regPhoneNumber: '',
     regCountry: 'Taiwan',
     regAddress: '',
+    regTotalPrice: 0,
     traveler: [],
   },
+  formValidity: false,
 })
 
 export const mutations = {
@@ -51,7 +53,12 @@ export const mutations = {
   },
   DELETE_TRAVELER(state, index) {
     state.form.traveler.splice(index, 1)
-    state.travelerNum -= 1
+  },
+  SET_FORMVALIDITY(state, payload) {
+    state.formValidity = payload
+  },
+  SET_TOTALPRICE(state, payload) {    
+    state.form.regTotalPrice = payload
   },
 }
 
@@ -59,4 +66,5 @@ export const getters = {
   GET_FORM: (state) => state.form,
   GET_TRAVELER: (state) => state.form.traveler,
   GET_TRAVELERNUMBER: (state) => state.form.traveler.length,
+  GET_FORMVALIDITY: (state) => state.formValidity
 }

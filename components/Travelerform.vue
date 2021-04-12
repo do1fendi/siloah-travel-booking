@@ -93,6 +93,28 @@
           </b-col>
         </b-form-row>
       </b-form>
+      <b-form-row class="mt-2">
+        <b-col class="mr-2">
+          <b-form-select
+            v-model="formTraveler.roomType"
+            :state="valRoomTypeState"
+            :options="room"
+            @change="onRoomTypeChange"
+            ref="rt"
+          >
+          </b-form-select>
+        </b-col>
+        <b-col class="ml-2">
+          <b-form-select
+            v-model="formTraveler.roomPerson"
+            :state="valRoomPersonState"
+            :options="person"
+            @change="onRoomPersonChange"
+            ref="rp"
+          >
+          </b-form-select>
+        </b-col>
+      </b-form-row>
 
       <!-- {{ index }}
       {{ travelerNumber }}
@@ -110,6 +132,8 @@ export default {
     return {
       // formTraveler: [],
       phoneCode: [],
+      room: [],
+      person: [],
       formTraveler: {
         lastTName: '',
         firstTName: '',
@@ -118,6 +142,8 @@ export default {
         mobileCountryCode: '',
         mobile: '',
         email: '',
+        roomType: '',
+        roomPerson: '',
       },
       index: null,
       disableFutureDate: today,
@@ -127,6 +153,12 @@ export default {
   computed: {
     ...mapGetters('form', ['GET_TRAVELER', 'GET_TRAVELERNUMBER', 'GET_FORM']),
     ...mapGetters('country', ['GET_PHONECODE']),
+    ...mapGetters('roomtype', [
+      'GET_ROOMTYPE',
+      'GET_ROOMPERSON',
+      'GET_PACKAGE_PRICE',
+    ]),
+    // ...mapGetters('foodtype',['GET_FOODTYPE']),
     ...mapMutations('form', ['SET_TRAVELER']),
     travelerCount() {
       return this.GET_TRAVELERNUMBER
@@ -147,14 +179,22 @@ export default {
       return this.formTraveler.mobile.length >= 5
     },
     valEmailState() {
-     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return re.test(this.formTraveler.email.toLowerCase())
+    },
+    valRoomTypeState() {
+      return this.formTraveler.roomType.length >= 1
+    },
+    valRoomPersonState() {
+      return this.formTraveler.roomPerson.length >= 1
     },
   },
   created() {
     // this.formTraveler = this.GET_TRAVELER
     this.travelerNumber = this.GET_TRAVELERNUMBER
     this.phoneCode = this.GET_PHONECODE
+    this.room = this.GET_ROOMTYPE
+    this.person = this.GET_ROOMPERSON
   },
   methods: {
     // index is from edit button, and add traveler button is undefined index
@@ -168,11 +208,16 @@ export default {
         mobileCountryCode: '',
         mobile: '',
         email: '',
+        roomType: '',
+        roomPerson: '',
+        price: 0
       }
       if (typeof index == 'undefined') {
         this.index = null
         this.phoneCode = this.GET_PHONECODE
         this.formTraveler.mobileCountryCode = '+886'
+        this.formTraveler.roomType = ''        
+        this.formTraveler.roomPerson = ''
       } else {
         //load found traveler data to current form fields
         this.formTraveler.lastTName = this.GET_TRAVELER[index].lastTName
@@ -186,6 +231,8 @@ export default {
         ].mobileCountryCode
         this.formTraveler.mobile = this.GET_TRAVELER[index].mobile
         this.formTraveler.email = this.GET_TRAVELER[index].email
+        this.formTraveler.roomType = this.GET_TRAVELER[index].roomType
+        this.formTraveler.roomPerson = this.GET_TRAVELER[index].roomPerson
         this.index = index
       }
       this.$bvModal.show('travelerForm')
@@ -198,7 +245,7 @@ export default {
         const index = this.index
         const form = this.formTraveler
         const combine = { index, form }
-        this.$store.commit('form/SET_TRAVELER', combine)
+        this.$store.commit('form/SET_TRAVELER', combine)       
       }
     },
     copyData() {
@@ -212,21 +259,37 @@ export default {
       if (!this.valLNState) {
         this.$refs.ln.$el.focus()
         return false
-      }else if(!this.valFNState){
+      } else if (!this.valFNState) {
         this.$refs.fn.$el.focus()
         return false
-      } else if(!this.valBirthdayState){
+      } else if (!this.valBirthdayState) {
         this.$refs.birth.$el.focus()
         return false
-      }else if(!this.valIDState){
+      } else if (!this.valIDState) {
         this.$refs.id.$el.focus()
         return false
-      }else if(!this.valMobileState){
+      } else if (!this.valMobileState) {
         this.$refs.mb.$el.focus()
         return false
-      }
-      else {
+      } else if (!this.valRoomTypeState) {
+        this.$refs.rt.$el.focus()
+        return false
+      } else if (!this.valRoomPersonState) {
+        this.$refs.rp.$el.focus()
+        return false
+      } else {
         return true
+      }
+    },
+    onRoomTypeChange() {
+      this.formTraveler.roomPerson = ''
+    },
+    onRoomPersonChange() {
+      if (this.formTraveler.roomType != '') {
+        const a = this.formTraveler.roomType
+        const b = this.formTraveler.roomPerson
+        this.formTraveler.price = this.GET_PACKAGE_PRICE[a][b]
+        console.log(this.GET_PACKAGE_PRICE[a][b])
       }
     },
   },

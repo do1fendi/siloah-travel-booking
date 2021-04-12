@@ -3,6 +3,7 @@
     <div class="mb-3 text-center">
       <h4>訂購人</h4>
     </div>
+    
     <!-- <b-form @submit="onSubmit"> -->
     <b-form @submit="onSubmit" class="form">
       <b-col class="">
@@ -84,7 +85,9 @@
       
     </b-form>
     <Traveler />
+    <h4>Total Price: {{ totalPrice }}</h4>
     <div>
+     
       {{ this.GET_FORM }}
     </div>
     <div class="submit">
@@ -108,9 +111,9 @@ export default {
     Traveler,
   },
   computed: {
-    ...mapMutations('form', ['SET_REGFORM']),
+    ...mapMutations('form', ['SET_REGFORM', 'SET_FORMVALIDITY', 'SET_TOTALPRICE']),
     ...mapGetters('country', ['GET_COUNTRY', 'GET_PHONECODE']),
-    ...mapGetters('form', ['GET_FORM', 'GET_TRAVELERNUMBER']),
+    ...mapGetters('form', ['GET_FORM', 'GET_TRAVELERNUMBER', 'GET_FORMVALIDITY', 'GET_TRAVELER']),
     travelerCount: function () {
       return this.GET_TRAVELERNUMBER
     },
@@ -201,6 +204,16 @@ export default {
         this.$store.commit('form/SET_REGFORM', combine)
       },
     },
+    totalPrice: function(){    
+      if (this.GET_TRAVELER.length > 0){
+        let total = 0;
+        this.GET_TRAVELER.forEach(element => {
+          total += element.price
+          this.$store.commit('form/SET_TOTALPRICE', total)
+        });
+        return this.GET_FORM.regTotalPrice
+      }
+    }
   },
   data() {
     return {
@@ -214,6 +227,9 @@ export default {
       e.preventDefault()
       if (this.formValidation()) {
         alert('can be submited')
+        // if form ok set vuex state formValidity to true
+        this.$store.commit('form/SET_FORMVALIDITY', true)
+        this.$router.push('creditPayment')
       }
 
       //this.$store.commit('form/SET_FORM', this.form)
@@ -255,6 +271,7 @@ export default {
     this.form = this.GET_FORM
     this.country = this.GET_COUNTRY
     this.phoneCode = this.GET_PHONECODE
+   
     //console.log(this.GET_PHONECODE)
   },
 }
