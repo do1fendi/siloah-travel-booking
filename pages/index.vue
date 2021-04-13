@@ -37,6 +37,7 @@ export default {
     ...mapGetters(['GET_TOKEN', 'GET_USERNAME', 'GET_PASSWORD']),
     ...mapGetters('roomtype',['GET_PACKAGE_PRICE']),
     ...mapMutations('roomtype', ['SET_PACKAGE_PRICE']),
+    ...mapMutations(['SET_GROUPNUMBER'])
   },
   mounted() {
     // first load get url param and run api to get tourpackage from TVT
@@ -47,6 +48,7 @@ export default {
     }, 900000)
 
     this.country = this.GET_COUNTRY
+    this.$store.commit('SET_GROUPNUMBER', this.$route.query.selectedGroupNumber)
   },
   methods: {
     //Function to get Token
@@ -159,7 +161,7 @@ export default {
          
         }
         this.$store.commit('roomtype/SET_PACKAGE_PRICE', setPrices)
-        console.log(JSON.stringify(this.GET_PACKAGE_PRICE))
+        // console.log(JSON.stringify(this.GET_PACKAGE_PRICE))
       }
       apiGetPackage()
     },

@@ -85,10 +85,9 @@
       
     </b-form>
     <Traveler />
-    <h4>Total Price: {{ totalPrice }}</h4>
+    <h5 class="mt-4">Total Price: {{ totalPrice }}</h5>
     <div>
      
-      {{ this.GET_FORM }}
     </div>
     <div class="submit">
       <div class="text-center mt-2">
@@ -226,7 +225,7 @@ export default {
     onSubmit(e) {
       e.preventDefault()
       if (this.formValidation()) {
-        alert('can be submited')
+        // alert('can be submited')
         // if form ok set vuex state formValidity to true
         this.$store.commit('form/SET_FORMVALIDITY', true)
         this.$router.push('creditPayment')
