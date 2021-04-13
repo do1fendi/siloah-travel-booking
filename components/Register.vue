@@ -94,7 +94,7 @@
         <b-button @click="onSubmit" variant="warning"><h6>Submit</h6></b-button>
       </div>
     </div>
-
+    <!-- {{form}} -->
     <Agreement ref="childAgreement" />
   </div>
 </template>

@@ -115,8 +115,8 @@
           </b-form-select>
         </b-col>
       </b-form-row>
-
-      <!-- {{ index }}
+      <!-- {{ formTraveler }}
+      {{ index }}
       {{ travelerNumber }}
       {{ form }} -->
     </b-modal>
@@ -233,6 +233,7 @@ export default {
         this.formTraveler.email = this.GET_TRAVELER[index].email
         this.formTraveler.roomType = this.GET_TRAVELER[index].roomType
         this.formTraveler.roomPerson = this.GET_TRAVELER[index].roomPerson
+        this.formTraveler.price = this.GET_TRAVELER[index].price
         this.index = index
       }
       this.$bvModal.show('travelerForm')
