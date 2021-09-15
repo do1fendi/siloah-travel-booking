@@ -1,6 +1,6 @@
 # siloah_travel_booking
 Link:
-https://do1fendi.github.io/siloah-travel-booking/?selectedGroupNumber=TESTPRICE
+https://do1fendi.github.io/siloah-travel-booking/?selectedGroupNumber=DDT000001
 
 ## Build Setup
 
